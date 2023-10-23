@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>F1 Fantasy Solver</title>
+<script src="getdata.js"></script>
+<script src="calc.js"></script>
+<script src="saveload.js"></script>
+<script src="ui.js"></script>
+</head>
+
+<body>
+
+<p id="lastupdatedisplay"></p>
+
+<h3>Save and Load settings</h3>
+<p>Save the race finish order and selected current drivers/constructors to a file that can be loaded back in and edited later.</p>
+<input type="button" value="Save" id="savebutton">
+<br>
+<input type="file" value="Load" id="loadinput">
+
+<h3>Cost Cap</h3>
+<p>In millions.</p>
+<input type="text" id="costcapinput">
+
+<h3>Predicted Finish Order</h3>
+<p>Can have duplicate values to rate two drivers equally. Drivers out of points scoring positions (11th or higher) are all rated equally.</p>
+<div style="display: flex;">
+	<div>
+		<table id="orderSelect">
+		</table>
+	</div>
+	<div id="orderDisplay">
+		<p>(1) Max Verstappen</p>
+		<p>(2) Lewis Hamilton</p>
+	</div>
+	<pre id="sortedFinishOrder"></pre>
+</div>
+
+<h3>Current Driver Picks</h3>
+<p>To to account for transfer penalties.</p>
+<div id="currentDriverPicks">
+</div>
+<h3>Current Team Picks</h3>
+<p>To to account for transfer penalties.</p>
+<div id="currentTeamPicks">
+</div>
+<hr>
+<input type="button" value="Get Best Picks" id="getPicksButton">
+<pre id="resultsDisplay"></pre>
+<p>Only race finish points are calculated. Qualifying, Sprint Race, Overtakes, Fastest Pit Stop, etc... are not part of the calculation.</p>
+
+<script>
+async function init() {
+	await getData();
+	await lastUpdateDisplay();
+	resetFinishOrder();
+	displayFinishOrder();
+	resetCurrentPicks();
+	displayCurrentPicksOptions();
+	getPicksButtonInit();
+	costCapInputInit();
+	saveLoadButtonInit();
+}
+init();
+</script>
+</body>
+</html>
