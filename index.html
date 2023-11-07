@@ -36,6 +36,9 @@
 	<pre id="sortedFinishOrder"></pre>
 </div>
 
+<h3>Free transfers.</h3>
+<p>Number of transfers before a penalty</p>
+<input type="text" id="freetransfersinput">
 <h3>Current Driver Picks</h3>
 <p>To to account for transfer penalties. (Optional)</p>
 <div id="currentDriverPicks">
@@ -60,6 +63,7 @@ async function init() {
 	getPicksButtonInit();
 	costCapInputInit();
 	saveLoadButtonInit();
+	freeTransferInputInit();
 }
 init();
 </script>

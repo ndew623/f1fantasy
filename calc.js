@@ -2,6 +2,7 @@ const placepointsmap = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 const closePointsThreshold = 5;
 
 var costcap = 100.0;
+var freetransfers = 2;
 var currDriverPicks = [];
 var currTeamPicks = [];
 
@@ -163,10 +164,10 @@ function calcTransferPenalty(driverindexes, teamindexes) {
 }
 
 function transferPenalties(numtransfers) {
-	if (numtransfers < 2) {
+	if (numtransfers < freetransfers) {
 		return 0;
 	}
-	return (numtransfers-2)*4;
+	return (numtransfers-freetransfers)*4;
 }
 
 function getNumTransfers(driverindexes, teamindexes) {

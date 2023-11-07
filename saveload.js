@@ -21,6 +21,7 @@ function getJsonString() {
 		}
 	}
 	json += '], ';
+	json += '"freetransfers":'+freetransfers+", ";
 	json += '"currdrivers": [';
 	for (let i = 0; i < currDriverPicks.length; i++) {
 		json += '"'+currDriverPicks[i]+'"';
@@ -68,8 +69,8 @@ function applySettings(settings) {
 	currTeamPicks = [];
 
 
-	document.getElementById("costcapinput").value=""+settings.costcap;
 	costcap = settings.costcap;
+	document.getElementById("costcapinput").value=""+costcap;
 	settings.finishorder.forEach(element=>{
 		document.getElementById(element.id+"-predpos").value=element.pos+"";
 		alldrivers.forEach(driver=>{
@@ -78,6 +79,8 @@ function applySettings(settings) {
 			}
 		});
 	});
+	freetransfers = settings.freetransfers;
+	document.getElementById("freetransfersinput").value=""+freetransfers;
 	settings.currdrivers.forEach(element=>{
 		document.getElementById(element+"-currdrivpick").checked=true;
 		currDriverPicks.push(element);

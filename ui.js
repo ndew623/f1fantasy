@@ -33,10 +33,10 @@ function costCapChangeListener(e) {
 	let costcaptext = e.target.value;
 	let costcapvalue = 0.0;
 	if (costcaptext.length > 0) {
-		costcapvalue = parseFloat(e.target.value);
+		costcapvalue = parseFloat(costcaptext);
 	}
 	if(isNaN(costcapvalue)) {
-		costcap = 0.0
+		costcap = 0.0;
 	} else {
 		costcap = costcapvalue;
 	}
@@ -107,6 +107,32 @@ function updateSortedFinish() {
 }
 
 
+//------------------------------
+//num free transfers ui
+//------------------------------
+function freeTransferInputInit() {
+	let freetransfersinput = document.getElementById("freetransfersinput");
+	freetransfersinput.value = ""+freetransfers;
+	freetransfersinput.addEventListener("input", freeTransferChangeListener);
+	freetransfersinput.addEventListener("blur", freeTransferInputBlurListener);
+}
+
+function freeTransferChangeListener(e) {
+	let freetransfertext = e.target.value;
+	let freetransfervalue = 0;
+	if (freetransfertext.length > 0) {
+		freetransfervalue = parseInt(freetransfertext);
+	}
+	if(isNaN(freetransfervalue)) {
+		freetransfers = 0;
+	} else {
+		freetransfers = freetransfervalue;
+	}
+}
+
+function freeTransferInputBlurListener(e) {
+	e.target.value = ""+freetransfers;
+}
 
 //------------------------------
 //current picks ui
