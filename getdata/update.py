@@ -1,8 +1,8 @@
-#use https://fantasy.formula1.com/feeds/drivers/20_en.json
+#use https://fantasy.formula1.com/feeds/drivers/21_en.json
 import json
 import urllib.request
 
-responseRaw = urllib.request.urlopen('https://fantasy.formula1.com/feeds/drivers/20_en.json').read()
+responseRaw = urllib.request.urlopen('https://fantasy.formula1.com/feeds/drivers/21_en.json').read()
 response = json.loads(responseRaw)
 
 
