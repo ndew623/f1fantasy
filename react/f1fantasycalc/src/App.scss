@@ -1,12 +1,21 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+$red:#FF0000;
+//checkbox styling
+$form-check-input-checked-border-color: darken($red, 7.5%);
+$form-check-input-checked-bg-color: $red;
+$form-check-input-focus-border: gray;
+$form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($red, 0.25);
 @import "bootstrap";
+
 
 .App {
   text-align: center;
 }
 
-$mynewcolor:#FF0000;
 .btn-primary {
-  @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), white);
+  @include button-variant($red, darken($red, 7.5%), white);
 }
 
 .pageTitle {
@@ -47,4 +56,21 @@ $mynewcolor:#FF0000;
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.CostCapInput {
+  width: 5rem;
+}
+.CostCapInputLabelBold {
+  font-weight: 800;
+}
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.LargeCheckbox {
+  width: 1.5em;
+  height: 1.5em;
 }
