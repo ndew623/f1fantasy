@@ -1,12 +1,19 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
-$red:#FF0000;
+//define main red color
+$red: #FF0000;
+
 //checkbox styling
 $form-check-input-checked-border-color: darken($red, 7.5%);
 $form-check-input-checked-bg-color: $red;
 $form-check-input-focus-border: gray;
 $form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($red, 0.25);
+
+//text input styling
+$input-focus-border-color: gray;
+$input-focus-box-shadow: 0 0 0 0.25rem rgba($red, 0.25);
+
 @import "bootstrap";
 
 
@@ -53,6 +60,7 @@ $form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($red, 0.25);
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -62,15 +70,39 @@ $form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($red, 0.25);
 .CostCapInput {
   width: 5rem;
 }
+
 .CostCapInputLabelBold {
   font-weight: 800;
 }
+
 h1 {
   font-size: 2.2rem;
   font-weight: 700;
 }
 
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.FreeTransfersInput {
+  width: 4rem;
+  text-align: center;
+}
+
 .LargeCheckbox {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.4em;
+  height: 1.4em;
+  margin-top: 0;
+}
+
+.PrevPicksColumn {
+  width: 12rem;
 }
