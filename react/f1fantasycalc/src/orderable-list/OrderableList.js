@@ -1,21 +1,29 @@
 import React from 'react';
 import { Reorder, useDragControls } from 'framer-motion';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ReorderIcon } from './Icon.js';
 import './OrderableList.scss';
 
-function OrderableList() {
-    const [items, setItems] = useState(["Max Verstappen", "Sergio Perez", "Lewis Hamilton", "George Russell", "Charles Leclerc", "Carlos Sainz", "Pierre Gasly", "Esteban Ocon", "Daniel Ricciardo", "Yuki Tsunoda", "Lando Norris", "Oscar Piastri", "Alex Albon", "Logan Sergeant", "Kevin Magnussen", "Nico Hulkenberg", "Fernando Alonso", "Lance Stroll", "Valteri Bottas", "Zhou Guanyu"]);
+function OrderableList({drivers, onChange}) {
+    const [driverIds, setDriverIds] = useState([]);
+    const [driversState, setDriversState] = useState([]);
     const dragControls = useDragControls();
+
+    useEffect(() => {
+        let driverIds = drivers.map((driver) => driver.id);
+        setDriverIds(driverIds);
+        setDriversState(drivers);
+    }, [drivers]);
+
     return (
-        <Reorder.Group axis="y" values={items} onReorder={setItems}>
-            {items.map((item, index) => (
-                <Reorder.Item key={item} value={item} dragListener="false">
-                    <div class="d-flex flex-row align-items-center">
+        <Reorder.Group axis="y" values={driverIds} onReorder={driverIds => onReorder(driverIds, setDriverIds, onChange, drivers)}>
+            {driverIds.map((driverId, index) => (
+                <Reorder.Item key={driverId} value={driverId} dragListener="false">
+                    <div className="d-flex flex-row align-items-center">
                         <ReorderIcon dragControls={dragControls} />
                         <div className="ms-2 d-flex flex-row" style={{width: "18rem"}}>
                             <div style={{ width: "2.5rem" }}>{getPos(index + 1)}</div>
-                            <div style={{width: "9rem"}}>{item}</div>
+                            <div style={{width: "9rem"}}>{getDriverNameFromId(driverId, drivers)}</div>
                             <div style={{width: "5rem"}}>{`(${posToPoints(index+1)} points)`}</div>
                         </div>
                     </div>
@@ -23,6 +31,19 @@ function OrderableList() {
             ))}
         </Reorder.Group>
     )
+}
+
+function getDriverNameFromId(id, drivers) {
+    let result = drivers.find(driver => driver.id === id);
+    if (result === undefined) {
+        return "";
+    }
+    return result.name;
+}
+
+function onReorder(ids, setDriverIds, onChange, drivers) {
+    setDriverIds(ids);
+    onChange(ids.map((id, index) => ({id: id, pos: index+1, name: getDriverNameFromId(id, drivers)})));
 }
 
 function getPos(x) {
