@@ -9,6 +9,7 @@ import { getPicks } from './util/calculate.js';
 function App() {
   const [costCap, setCostCap] = useState(100);
   const [numFreeTransfers, setNumFreeTransfers] = useState(2);
+  //TODO swap penalties -> transfer penalties
   const [includeSwapPenalties, setIncludeSwapPenalties] = useState(true);
   const [activeDrivers, setActiveDrivers] = useState([]);
   const [activeConstructors, setActiveConstructors] = useState([]);
@@ -71,16 +72,16 @@ function App() {
         {/* RESULTS */}
         <h1 className="text-start mt-3">4. Calculate best picks</h1>
         <div className="pb-3">
-          { results.length > 0 ? (<ResultsDisplay results={[]} />) : null }
-          <button className="btn btn-lg btn-primary ms-4" onClick={e => calculateButtonClicked(costCap, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder, activeDrivers, activeConstructors, setResults)}><i className="bi-calculator"></i> Calculate</button>
+          <ResultsDisplay results={results} />
+          <button className="btn btn-lg btn-primary ms-4" onClick={e => calculateButtonClicked(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder, activeDrivers, activeConstructors, setResults)}><i className="bi-calculator"></i> Calculate</button>
         </div>
       </div>
     </div>
   );
 }
 
-function calculateButtonClicked(costCap, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder, activeDrivers, activeConstructors, setResults) {
-  let result = getPicks(costCap, numFreeTransfers, prevDriverPicks, prevConstructorPicks, activeDrivers, activeConstructors, predOrder)
+function calculateButtonClicked(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder, activeDrivers, activeConstructors, setResults) {
+  let result = getPicks(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, activeDrivers, activeConstructors, predOrder)
   setResults(result);
 }
 
