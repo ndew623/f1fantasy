@@ -81,7 +81,7 @@ function App() {
 }
 
 function calculateButtonClicked(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder, activeDrivers, activeConstructors, setResults) {
-  let result = getPicks(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, activeDrivers, activeConstructors, predOrder)
+  let result = getPicks(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, activeDrivers, activeConstructors, predOrder);
   setResults(result);
 }
 

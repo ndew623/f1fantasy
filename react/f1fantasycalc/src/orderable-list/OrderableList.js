@@ -13,6 +13,9 @@ function OrderableList({drivers, onChange}) {
         let driverIds = drivers.map((driver) => driver.id);
         setDriverIds(driverIds);
     }, [drivers]);
+    useEffect(() => {
+        onChange(driverIds);
+    }, [driverIds]);
 
     return (
         <Reorder.Group axis="y" values={driverIds} onReorder={driverIds => onReorder(driverIds, setDriverIds, onChange, drivers)}>
@@ -41,8 +44,7 @@ function getDriverNameFromId(id, drivers) {
 }
 
 function onReorder(ids, setDriverIds, onChange, drivers) {
-    setDriverIds(ids);
-    onChange(ids.map((id, index) => ({id: id, pos: index+1, name: getDriverNameFromId(id, drivers)})));
+    setDriverIds(ids.map(id => parseInt(id)));
 }
 
 function getPos(x) {

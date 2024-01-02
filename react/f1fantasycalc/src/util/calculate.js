@@ -148,15 +148,15 @@ function incrementArrayNoRepeats(a) {
 }
 function calcExpectedPoints(driverindices, constructorindices, predOrder, DRSdriverindex, accountForTransferPenalties, prevDriverPicks, prevConstructorPicks, numFreeTransfers, activeDrivers, activeConstructors) {
     let drspoints = posToPoints(posFromId(activeDrivers[DRSdriverindex].id, predOrder));
-    let points = calcDriverPoints(driverindices, predOrder, activeDrivers)
-        + calcConstructorPoints(constructorindices, predOrder, activeDrivers, activeConstructors)
-        + drspoints;
-    let transferPenaltyPoints = 0;
+    let driverPoints = calcDriverPoints(driverindices, predOrder, activeDrivers);
+    let constructorPoints = calcConstructorPoints(constructorindices, predOrder, activeDrivers, activeConstructors);
+    let points = driverPoints + constructorPoints + drspoints;
+    let transferPenalty = {points: 0, numTransfers: 0};
     if (accountForTransferPenalties) {
-        transferPenaltyPoints = calcTransferPenalty(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks, numFreeTransfers);
+        transferPenalty = calcTransferPenalty(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks, numFreeTransfers);
     }
-    points -= transferPenaltyPoints;
-    return {net: points, transferPenalty: transferPenaltyPoints};
+    points -= transferPenalty.points;
+    return {net: points, transferPenalty: transferPenalty.points, numTransfers: transferPenalty.numTransfers};
 }
 function calcDriverPoints(driverindex, predOrder, activeDrivers) {
     let totalpoints = 0;
@@ -182,9 +182,8 @@ function calcConstructorPoints(constructorindex, predOrder, activeDrivers, activ
 }
 
 function calcTransferPenalty(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks, numFreeTransfers) {
-    return transferPenaltyPoints(
-        getNumTransfers(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks),
-        numFreeTransfers);
+    let numTransfers = getNumTransfers(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks);
+    return {points: transferPenaltyPoints(numTransfers, numFreeTransfers), numTransfers: numTransfers};
 }
 
 function transferPenaltyPoints(numtransfers, numFreeTransfers) {
@@ -259,9 +258,8 @@ function arraysEqual(a, b) {
 }*/
 
 function posFromId(id, predOrder) {
-    let result = predOrder.find(driver => driver.id === id);
-    if (result === undefined) {
-        return -1;
-    }
-    return result.pos;
+    let result = predOrder.findIndex(driverId => {
+        return driverId === id;
+    });
+    return result+1;
 }

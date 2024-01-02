@@ -4,8 +4,8 @@ import { closePointsThreshold } from './util/calculate';
 export function ResultsDisplay({ results }) {
     const [picksText, setPicksText] = useState("");
     useEffect(() => {
-        //TODO doesn't display
-        if (results.hasOwnProperty("samepoints")) {
+        if (results.hasOwnProperty("samePoints")) {
+            console.log(results);
             displayResults(results, setPicksText);
         }
 
@@ -21,7 +21,7 @@ function displayResults(results, setPicksText) {
     displayText += getPicksDisplayString(bestpicks);
 
     let altPickCount = 1;
-    results.samepoints.forEach(picks => {
+    results.samePoints.forEach(picks => {
         displayText += "\n\nHighest points alternate pick #" + altPickCount + "\n";
         displayText += "----------------------------------------\n";
         displayText += getPicksDisplayString(picks);
@@ -41,7 +41,7 @@ function displayResults(results, setPicksText) {
 
 function getPicksDisplayString(picks) {
     let picksText = "";
-    picksText += "Expected points: " + picks.expectedpoints + "\n";
+    picksText += "Expected points: " + picks.expectedPoints + "\n";
     picksText += "Cost: " + picks.cost + "\n";
     picksText += "Num Transfers: " + picks.numTransfers;
     if (picks.transferPenaltyPoints > 0) {
