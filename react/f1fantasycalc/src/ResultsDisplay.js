@@ -5,12 +5,87 @@ export function ResultsDisplay({ results }) {
     const [picksText, setPicksText] = useState("");
     useEffect(() => {
         if (results.hasOwnProperty("samePoints")) {
-            console.log(results);
-            displayResults(results, setPicksText);
+            //displayResults(results, setPicksText);
         }
 
     }, [results]);
-    return (<pre>{picksText}</pre>)
+    if (results.hasOwnProperty("best")) {
+        console.log("results has best");
+        console.log(results.best);
+        let bestCard = Card(results.best);
+        let samePointsSplit = splitArray(results.samePoints, 3);
+        let closePointsSplit = splitArray(results.closePoints, 3);
+        return (
+            <div>
+                <h2>Most points, most budget</h2>
+                <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            {bestCard}
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                <h2>Most points, less budget</h2>
+                <table>
+                <tbody>
+                    {samePointsSplit.map((picks, index) => {
+                        return (
+                            <tr key={index}>
+                                {picks.map((picks, index) => {
+                                    return (
+                                        <td key={index}>
+                                            {Card(picks)}
+                                        </td>
+                                    )
+                                })}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+                </table>
+                <h2>Close to most points</h2>
+                <table>
+                <tbody>
+                    {closePointsSplit.map((picks, index) => {
+                        return (
+                            <tr key={index}>
+                                {picks.map((picks, index) => {
+                                    return (
+                                        <td key={index}>
+                                            {Card(picks)}
+                                        </td>
+                                    )
+                                })}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+                </table>
+            </div>
+         );
+    } else {
+        return;
+    }
+}
+
+function Card(picks) {
+    return (
+        <div className="card">
+            <div className="card-body">
+                <pre>{getPicksDisplayString(picks)}</pre>
+            </div>
+        </div>
+    )
+}
+
+function splitArray(a, length) {
+    let result = [];
+    for (let i = 0; i < a.length; i += length) {
+        result.push(a.slice(i, i + length));
+    }
+    return result;
 }
 
 function displayResults(results, setPicksText) {

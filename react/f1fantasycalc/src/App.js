@@ -23,6 +23,7 @@ function App() {
     getDriversAndConstructors(setActiveDrivers, setActiveConstructors, setAllDrivers, setAllConstructors);
   }, []);
 
+  let fileInput = <input type="file"></input>
 
   return (
     <div className="d-flex flex-column">
@@ -36,8 +37,9 @@ function App() {
       <div className="d-flex flex-column ms-2">
         {/* SAVE AND LOAD BUTTONS */}
         <div className="d-flex flow-row mt-3">
-          <button className="btn btn-lg btn-primary ms-2"><i className="bi-save"></i> Save</button>
-          <button className="btn btn-lg btn-primary ms-2"><i className="bi-upload"></i> Load</button>
+          <button className="btn btn-lg btn-primary ms-2"><i className="bi-save" onClick={e => saveButtonOnClick(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder)}></i> Save</button>
+          <label className="btn btn-lg btn-primary ms-2" htmlFor="settings-file-input"><i className="bi-upload" onClick={e => loadButtonOnClick(fileInput)}></i> Load</label>
+          <input id="settings-file-input" type="file" style={{display: "none"}} onChange={e => onSettingsFileLoaded(e, setCostCap, setIncludeSwapPenalties, setNumFreeTransfers, setPrevDriverPicks, setPrevConstructorPicks, setPredOrder)}></input>
         </div>
 
         {/*COST CAP*/}
@@ -67,7 +69,7 @@ function App() {
         {/* PREDICTED ORDER LIST */}
         <h1 className="text-start mt-3">3. Predict race finish</h1>
         <div className="mt-2 me-auto">
-          <OrderableList drivers={activeDrivers} onChange={predOrder=>onPredOrderChange(predOrder, setPredOrder)} style={{ width: '50px' }} />
+          <OrderableList drivers={activeDrivers} order={predOrder} onChange={predOrder=>onPredOrderChange(predOrder, setPredOrder)} style={{ width: '50px' }} />
         </div>
         {/* RESULTS */}
         <h1 className="text-start mt-3">4. Calculate best picks</h1>
@@ -118,6 +120,54 @@ function onPrevPicksChange(driverPicks, constructorPicks, setPrevDriverPicks, se
 
 function onPredOrderChange(predOrder, setPredOrder) {
   setPredOrder(predOrder);
+}
+
+function saveButtonOnClick(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder) {
+  let settings = getJsonSettings(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder);
+  let blob = new Blob([settings], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "f1-fantasy-calc-settings.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function loadButtonOnClick(fileInput) {
+  fileInput.click();
+}
+
+function onSettingsFileLoaded(e, setCostCap, setIncludeSwapPenalties, setNumFreeTransfers, setPrevDriverPicks, setPrevConstructorPicks, setPredOrder) {
+  let file = e.target.files[0];
+  let reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      let settings = JSON.parse(e.target.result);
+      console.log(JSON.stringify(settings));
+      setCostCap(settings.costCap);
+      setIncludeSwapPenalties(settings.includeSwapPenalties);
+      setNumFreeTransfers(settings.numFreeTransfers);
+      setPrevDriverPicks(settings.prevDriverPicks);
+      setPrevConstructorPicks(settings.prevConstructorPicks);
+      setPredOrder(settings.predOrder);
+    } catch (e) {
+      console.log("Could not parse loaded settings: " + e);
+    }
+  };
+  reader.readAsText(file);
+  console.log(e.target.files[0]);
+}
+
+function getJsonSettings(costCap, includeSwapPenalties, numFreeTransfers, prevDriverPicks, prevConstructorPicks, predOrder) {
+  let settings = {
+    costCap: costCap,
+    includeSwapPenalties: includeSwapPenalties,
+    numFreeTransfers: numFreeTransfers,
+    prevDriverPicks: prevDriverPicks,
+    prevConstructorPicks: prevConstructorPicks,
+    predOrder: predOrder
+  };
+  return JSON.stringify(settings);
 }
 
 async function getDriversAndConstructors(setActiveDrivers, setActiveConstructors, setAllDrivers, setAllConstructors) {

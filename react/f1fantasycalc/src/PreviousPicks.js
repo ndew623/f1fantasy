@@ -10,8 +10,8 @@ export function PreviousPicks({drivers, constructors, onChange}) {
     useEffect(() => {
         //return only the id and name of the drivers and constructors that were picked
         onChange(
-            driverPicks.filter(driver => driver.picked).map(driver => {return {id: driver.id, name: driver.name}}),
-            constructorPicks.filter(constructor => constructor.picked).map(constructor => {return {id: constructor.id, name: constructor.name}})
+            driverPicks.filter(driver => driver.picked).map(driver => driver.id),
+            constructorPicks.filter(constructor => constructor.picked).map(constructor => constructor.id)
         );
     }, [driverPicks, constructorPicks]);
     return (

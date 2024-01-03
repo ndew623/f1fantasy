@@ -5,14 +5,22 @@ import { ReorderIcon } from './Icon.js';
 import './OrderableList.scss';
 import { posToPoints } from '../util/points.js';
 
-function OrderableList({drivers, onChange}) {
+function OrderableList({drivers, order, onChange}) {
     const [driverIds, setDriverIds] = useState([]);
     const dragControls = useDragControls();
 
     useEffect(() => {
-        let driverIds = drivers.map((driver) => driver.id);
-        setDriverIds(driverIds);
+        if (order === undefined || order.length === 0) {
+            let driverIds = drivers.map((driver) => driver.id);
+            setDriverIds(driverIds);
+        }
     }, [drivers]);
+    useEffect(() => {
+        if (order !== undefined && order.length >= 0) {
+            setDriverIds(order);
+        }
+    }, [order]);
+
     useEffect(() => {
         onChange(driverIds);
     }, [driverIds]);
@@ -36,15 +44,17 @@ function OrderableList({drivers, onChange}) {
 }
 
 function getDriverNameFromId(id, drivers) {
-    let result = drivers.find(driver => driver.id === id);
+    let result = drivers.find(driver => {
+        return driver.id === id;
+    });
     if (result === undefined) {
         return "";
     }
     return result.name;
 }
 
-function onReorder(ids, setDriverIds, onChange, drivers) {
-    setDriverIds(ids.map(id => parseInt(id)));
+function onReorder(ids, setDriverIds) {
+    setDriverIds(ids);
 }
 
 function getPos(x) {

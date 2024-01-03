@@ -195,10 +195,10 @@ function transferPenaltyPoints(numtransfers, numFreeTransfers) {
 
 function getNumTransfers(activeDrivers, activeConstructors, driverindices, constructorindices, prevDriverPicks, prevConstructorPicks) {
     let numtransfers = 0;
-    prevDriverPicks.forEach(driver => {
+    prevDriverPicks.forEach(driverId => {
         let isTransfer = true;
         driverindices.forEach(index => {
-            if (driver.id === activeDrivers[index].id) {
+            if (driverId === activeDrivers[index].id) {
                 isTransfer = false;
             }
         });
@@ -206,10 +206,10 @@ function getNumTransfers(activeDrivers, activeConstructors, driverindices, const
             numtransfers++;
         }
     });
-    prevConstructorPicks.forEach(constructor => {
+    prevConstructorPicks.forEach(constructorId => {
         let isTransfer = true;
         constructorindices.forEach(index => {
-            if (constructor.id === activeConstructors[index].id) {
+            if (constructorId === activeConstructors[index].id) {
                 isTransfer = false;
             }
         });
