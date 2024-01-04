@@ -13,20 +13,14 @@ function OrderableList({drivers, order, onChange}) {
         if (order === undefined || order.length === 0) {
             let driverIds = drivers.map((driver) => driver.id);
             setDriverIds(driverIds);
-        }
-    }, [drivers]);
-    useEffect(() => {
-        if (order !== undefined && order.length >= 0) {
+            onChange(driverIds);
+        } else {
             setDriverIds(order);
         }
-    }, [order]);
-
-    useEffect(() => {
-        onChange(driverIds);
-    }, [driverIds]);
+    }, [drivers, order]);
 
     return (
-        <Reorder.Group axis="y" values={driverIds} onReorder={driverIds => onReorder(driverIds, setDriverIds, onChange, drivers)}>
+        <Reorder.Group axis="y" values={driverIds} onReorder={driverIds => onReorder(driverIds, setDriverIds, onChange)}>
             {driverIds.map((driverId, index) => (
                 <Reorder.Item key={driverId} value={driverId} dragListener="false">
                     <div className="d-flex flex-row align-items-center">
@@ -53,8 +47,9 @@ function getDriverNameFromId(id, drivers) {
     return result.name;
 }
 
-function onReorder(ids, setDriverIds) {
+function onReorder(ids, setDriverIds, onChange) {
     setDriverIds(ids);
+    onChange(ids);
 }
 
 function getPos(x) {

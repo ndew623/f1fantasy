@@ -10,8 +10,6 @@ export function ResultsDisplay({ results }) {
 
     }, [results]);
     if (results.hasOwnProperty("best")) {
-        console.log("results has best");
-        console.log(results.best);
         let bestCard = Card(results.best);
         let samePointsSplit = splitArray(results.samePoints, 3);
         let closePointsSplit = splitArray(results.closePoints, 3);
