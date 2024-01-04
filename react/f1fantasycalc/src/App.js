@@ -61,7 +61,7 @@ function App() {
               <h2>Number of free transfers: </h2>
               <input type="text" className="form-control FreeTransfersInput ms-2" value={numFreeTransfers} onChange={e => setNumFreeTransfers(e.target.value)} onBlur={e => numFreeTransfersInputBlur(e.target.value, setNumFreeTransfers)}/>
             </div>
-            <PreviousPicks drivers={allDrivers} constructors={allConstructors} onChange={(driverPicks, constructorPicks) => onPrevPicksChange(driverPicks, constructorPicks, setPrevDriverPicks, setPrevConstructorPicks)}/>
+            <PreviousPicks drivers={allDrivers} constructors={allConstructors} prevDriverPicks={prevDriverPicks} prevConstructorPicks={prevConstructorPicks} onChange={(driverPicks, constructorPicks) => onPrevPicksChange(driverPicks, constructorPicks, setPrevDriverPicks, setPrevConstructorPicks)}/>
             </div>
           ): null}
 
@@ -149,7 +149,7 @@ function onSettingsFileLoaded(e, setCostCap, setIncludeSwapPenalties, setNumFree
       setNumFreeTransfers(settings.numFreeTransfers);
       setPrevDriverPicks(settings.prevDriverPicks);
       setPrevConstructorPicks(settings.prevConstructorPicks);
-      setPredOrder(settings.predOrder);
+      setPredOrder(settings.predOrder.map(id => id.toString()));
     } catch (e) {
       console.log("Could not parse loaded settings: " + e);
     }

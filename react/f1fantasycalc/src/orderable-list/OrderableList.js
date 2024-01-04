@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ReorderIcon } from './Icon.js';
 import './OrderableList.scss';
 import { posToPoints } from '../util/points.js';
+import { getNameFromId } from '../util/idnames.js';
 
 function OrderableList({drivers, order, onChange}) {
     const [driverIds, setDriverIds] = useState([]);
@@ -14,10 +15,14 @@ function OrderableList({drivers, order, onChange}) {
             let driverIds = drivers.map((driver) => driver.id);
             setDriverIds(driverIds);
             onChange(driverIds);
-        } else {
-            setDriverIds(order);
         }
-    }, [drivers, order]);
+    }, [drivers]);
+
+    useEffect( ()=>{
+            if (order !== undefined && order.length > 0) {
+                setDriverIds(order);
+            }
+        },[order])
 
     return (
         <Reorder.Group axis="y" values={driverIds} onReorder={driverIds => onReorder(driverIds, setDriverIds, onChange)}>
@@ -27,7 +32,7 @@ function OrderableList({drivers, order, onChange}) {
                         <ReorderIcon dragControls={dragControls} />
                         <div className="ms-2 d-flex flex-row" style={{width: "18rem"}}>
                             <div style={{ width: "2.5rem" }}>{getPos(index + 1)}</div>
-                            <div style={{width: "9rem"}}>{getDriverNameFromId(driverId, drivers)}</div>
+                            <div style={{width: "9rem"}}>{getNameFromId(driverId, drivers)}</div>
                             <div style={{width: "5rem"}}>{`(${posToPoints(index+1)} points)`}</div>
                         </div>
                     </div>
@@ -35,16 +40,6 @@ function OrderableList({drivers, order, onChange}) {
             ))}
         </Reorder.Group>
     )
-}
-
-function getDriverNameFromId(id, drivers) {
-    let result = drivers.find(driver => {
-        return driver.id === id;
-    });
-    if (result === undefined) {
-        return "";
-    }
-    return result.name;
 }
 
 function onReorder(ids, setDriverIds, onChange) {
