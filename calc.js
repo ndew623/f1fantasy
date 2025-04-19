@@ -85,6 +85,7 @@ function getNextDrivers(prevdrivers) {
 		let driverPoints = getDriverPoints(driverindex);
 		if (driverPoints >= bestScore) {
 			newdrivers.DRSdriverindex = driverindex;
+			bestScore = driverPoints;
 		}
 	});
 	return newdrivers;
@@ -125,7 +126,7 @@ function calcDriversPoints(driverindexes) {
 function calcTeamsPoints(teamindexes) {
 	let totalPoints = 0;
 	teamindexes.forEach(teamindex => {
-		totalPoints = getTeamPoints(teamindex);
+		totalPoints += getTeamPoints(teamindex);
 	});
 	return totalPoints;
 }
