@@ -46,66 +46,29 @@ function costCapInputBlurListener(e) {
 	e.target.value = ""+costcap;
 }
 
-
 //------------------------------
-//finish order prediction ui
+//pred data ui
 //------------------------------
-
-function resetFinishOrder() {
-	let orderSelect = document.getElementById("orderSelect");
-	let orderDisplay = document.getElementById("orderDisplay");
-	orderSelect.innerHTML = "";
-	orderDisplay.innerHTML = "";
+function predDataInit() {
+	let predDataInput = document.getElementById("preddatainput");
+	predDataInput.addEventListener("input", predDataInputChangeListener);
+	predDataInputChangeListener(null);
 }
-function displayFinishOrder() {
-	let orderSelect = document.getElementById("orderSelect");
-	alldrivers.forEach(driver => {
-		let label = document.createElement('label');
-		label.innerHTML = driver.name;
-		let input = document.createElement('input');
-		input.setAttribute("type", "number");
-		input.setAttribute("id", driver.id+"-predpos");
-		input.setAttribute("min", "1");
-		input.setAttribute("max", ""+alldrivers.length);
-		input.setAttribute("value", driver.predpos);
-		input.addEventListener("input", positionValueChangeListener);
-
-		let tr = document.createElement('tr');
-		let td = document.createElement('td');
-		td.appendChild(label);
-		td.appendChild(input);
-		tr.appendChild(td);
-		orderSelect.appendChild(tr);
-	});
-}
-function positionValueChangeListener(e) {
-	let id = e.target.id.replace("-predpos", "");
-	let value = parseInt(e.target.value);
-	if (isNaN(value) || value < 1) {
-		value = 1;
-	}
-	if (value > alldrivers.length) {
-		value = alldrivers.length;
-	}
-	alldrivers.forEach(driver => {
-		if (driver.id === id) {
-			driver.predpos = value;
+function predDataInputChangeListener(e) {
+	let predDataInput = document.getElementById("preddatainput");
+	let predDataStatus = document.getElementById("preddatastatus");
+	const jsonString = predDataInput.value;
+	try {
+		predData = JSON.parse(jsonString);
+		predDataStatus.innerHTML = "JSON Parsed OK";
+	} catch(error) {
+		if (jsonString.length == 0) {
+			predDataStatus.innerHTML = "Awaiting data...";
+		} else {
+			predDataStatus.innerHTML = "Could not parse input as JSON";
 		}
-	});
-	updateSortedFinish();
+	}
 }
-
-function updateSortedFinish() {
-	let sortedFinishDisplay = document.getElementById("sortedFinishOrder");
-	let positions = alldrivers.map(driver => {return {position: driver.predpos, name: driver.name}});
-	positions.sort((a,b) => {return a.position - b.position});
-	let finishOrderText = "";
-	positions.forEach(driver => {
-		finishOrderText+="("+driver.position+") " + driver.name + "\n";
-	});
-	sortedFinishDisplay.innerHTML=finishOrderText;
-}
-
 
 //------------------------------
 //num free transfers ui

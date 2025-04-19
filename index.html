@@ -3,6 +3,7 @@
 <head>
 <title>F1 Fantasy Solver</title>
 <script src="getdata.js"></script>
+<script src="convertdata.js"></script>
 <script src="calc.js"></script>
 <script src="saveload.js"></script>
 <script src="ui.js"></script>
@@ -22,19 +23,9 @@
 <p>In millions.</p>
 <input type="text" id="costcapinput">
 
-<h3>Predicted Finish Order</h3>
-<p>Can have duplicate values to rate two drivers equally (e.g. if you think that 3 drivers have an equal chance to win, you can predict 1st for all of them). Drivers out of points scoring positions (11th or worse) are all rated equally. Moving a driver from 20th to 11th will not change the results.</p>
-<div style="display: flex;">
-	<div>
-		<table id="orderSelect">
-		</table>
-	</div>
-	<div id="orderDisplay">
-		<p>(1) Max Verstappen</p>
-		<p>(2) Lewis Hamilton</p>
-	</div>
-	<pre id="sortedFinishOrder"></pre>
-</div>
+<h3>f1fantasytools.com prediction data</h3>
+<textarea id="preddatainput" rows="10" cols="50"></textarea>
+<p id="preddatastatus">Awaiting data...</p>
 
 <h3>Free transfers.</h3>
 <p>Number of transfers before a penalty</p>
@@ -50,15 +41,13 @@
 <hr>
 <input type="button" value="Get Best Picks" id="getPicksButton">
 <pre id="resultsDisplay"></pre>
-<p>Only race finish points are calculated. Qualifying, Sprint Race, Overtakes, Fastest Pit Stop, etc... are not part of the calculation.</p>
 
 <script>
 async function init() {
 	await getData();
 	await lastUpdateDisplay();
-	resetFinishOrder();
-	displayFinishOrder();
 	resetCurrentPicks();
+	predDataInit();
 	displayCurrentPicksOptions();
 	getPicksButtonInit();
 	costCapInputInit();

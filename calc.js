@@ -1,10 +1,10 @@
-const placepointsmap = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 const closePointsThreshold = 5;
 
 var costcap = 100.0;
 var freetransfers = 2;
 var currDriverPicks = [];
 var currTeamPicks = [];
+var predData = {};
 
 //return {drivers, teams, expectedpoints, cost}
 function getBestPicks() {
@@ -78,17 +78,12 @@ function getNextDrivers(prevdrivers) {
 	driverChoiceArray = prevdrivers.driverindexes.concat([alldrivers.length]);
 	let newDriverChoiceArray = incrementArrayNoRepeats(driverChoiceArray);
 	let newdrivers = { driverindexes: newDriverChoiceArray, cost: 0.0, DRSdriverindex: -1 };
-	//add up cost and set drs on driver with most points
-	let bestFinishPos = alldrivers[newdrivers.driverindexes[0]].predpos;
-	newdrivers.DRSdriverindex = newdrivers.driverindexes[0];
+	//add up cost, and choose highest scoring driver for drs
+	let bestScore = -Number.MAX_VALUE;
 	newdrivers.driverindexes.forEach( driverindex => {
-		let cost = alldrivers[driverindex].cost
-		newdrivers.cost += cost;
-		if (alldrivers[driverindex].predpos < bestFinishPos) {//if driver has a better finish, give DRS
-			bestFinishPos = alldrivers[driverindex].predpos;
-			newdrivers.DRSdriverindex = driverindex;
-		} else if (alldrivers[driverindex].predpos === bestFinishPos && alldrivers[newdrivers.DRSdriverindex].cost > cost) {//if driver finish pos is equal but driver is more expensive, give DRS
-			bestFinishPos = alldrivers[driverindex].predpos;
+		newdrivers.cost += alldrivers[driverindex].cost;
+		let driverPoints = getDriverPoints(driverindex);
+		if (driverPoints >= bestScore) {
 			newdrivers.DRSdriverindex = driverindex;
 		}
 	});
@@ -115,19 +110,14 @@ function incrementArrayNoRepeats(a) {
 }
 
 function calcExpectedPoints(driverindexes, teamindexes, DRSdriverindex) {
-	drspoints = placepointsmap[alldrivers[DRSdriverindex].predpos-1];
+	drspoints = getDriverPoints(DRSdriverindex);
 	return calcDriversPoints(driverindexes) + calcTeamsPoints(teamindexes) + drspoints - calcTransferPenalty(driverindexes, teamindexes);
 }
 
 function calcDriversPoints(driverindexes) {
 	let totalPoints = 0;
 	driverindexes.forEach(driverindex => {
-		driver = alldrivers[driverindex];
-		if (driver.predpos <= placepointsmap.length) {
-			totalPoints += placepointsmap[driver.predpos-1];
-		} else {
-			totalPoints += 0;//NOTE: could adjust from 0 to have some < 1 weight. to make 11th being better than 20th for example
-		}
+		totalPoints += getDriverPoints(driverindex);
 	});
 	return totalPoints;
 }
@@ -135,16 +125,20 @@ function calcDriversPoints(driverindexes) {
 function calcTeamsPoints(teamindexes) {
 	let totalPoints = 0;
 	teamindexes.forEach(teamindex => {
-		team = allteams[teamindex];
-		teamdrivers = [];
-		for (let i = 0; i < alldrivers.length; i++) {
-			if (alldrivers[i].teamid === team.id) {
-				teamdrivers.push(i);
-			}
-		}
-		totalPoints += calcDriversPoints(teamdrivers);
+		totalPoints = getTeamPoints(teamindex);
 	});
 	return totalPoints;
+}
+
+function getDriverPoints(driverindex) {
+	let driver = alldrivers[driverindex];
+	let driverAbbrevName=abrevConvert(driver.team)+"_"+abrevConvert(driver.name);
+	return predData["drivers"]["pts"][driverAbbrevName];
+}
+function getTeamPoints(teamindex) {
+	let team = allteams[teamindex];
+	let teamAbbrevName = abrevConvert(team.name);
+	return predData["constructors"]["pts"][teamAbbrevName];
 }
 
 //https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
@@ -195,4 +189,40 @@ function getNumTransfers(driverindexes, teamindexes) {
 		}
 	});
 	return numtransfers;
+}
+
+const abbrevMappings = {
+	"McLaren": "MCL",
+	"Alpine": "ALP",
+	"Red Bull Racing": "RED",
+	"Aston Martin": "AST",
+	"Ferrari": "FER",
+	"Haas": "HAA",
+	"Mercedes": "MER",
+	"Racing Bulls": "VRB",
+	"Kick Sauber": "KCK",
+	"Williams": "WIL",
+	"Max Verstappen": "VER",
+	"Lando Norris": "NOR",
+	"Oscar Piastri": "PIA",
+	"Charles Leclerc": "LEC",
+	"Lewis Hamilton": "HAM",
+	"Yuki Tsunoda": "TSU",
+	"George Russell": "RUS",
+	"Kimi Antonelli": "ANT",
+	"Fernando Alonso": "ALO",
+	"Lance Stroll": "STR",
+	"Pierre Gasly": "GAS",
+	"Jack Doohan": "DOO",
+	"Esteban Ocon": "OCO",
+	"Ollie Bearman": "BEA",
+	"Liam Lawson": "LAW",
+	"Isack Hadjar": "HAD",
+	"Alex Albon": "ALB",
+	"Carlos Sainz": "SAI",
+	"Nico Hulkenburg": "HUL",
+	"Gabriel Bortoleto": "BOR"
+}
+function abrevConvert(full) {
+	return abbrevMappings[full];
 }

@@ -12,15 +12,9 @@ function saveSettings(e) {
 function getJsonString() {
 	let json = "{";
 	json += '"costcap":'+costcap+", ";
-	json += '"finishorder": [';
-	for (let i = 0; i < alldrivers.length; i++) {
-		driver = alldrivers[i];
-		json += '{"id":"'+driver.id+'", "pos":'+driver.predpos+'}';
-		if (i < alldrivers.length -1) {
-			json += ", ";
-		}
-	}
-	json += '], ';
+	json += '"predData": ';
+	json += JSON.stringify(predData)
+	json += ',';
 	json += '"freetransfers":'+freetransfers+", ";
 	json += '"currdrivers": [';
 	for (let i = 0; i < currDriverPicks.length; i++) {
@@ -71,14 +65,8 @@ function applySettings(settings) {
 
 	costcap = settings.costcap;
 	document.getElementById("costcapinput").value=""+costcap;
-	settings.finishorder.forEach(element=>{
-		document.getElementById(element.id+"-predpos").value=element.pos+"";
-		alldrivers.forEach(driver=>{
-			if (driver.id === element.id) {
-				driver.predpos = element.pos;
-			}
-		});
-	});
+	predDataInput = document.getElementById("preddatainput").value=JSON.stringify(settings.predData);
+	predDataInputChangeListener(null);
 	freetransfers = settings.freetransfers;
 	document.getElementById("freetransfersinput").value=""+freetransfers;
 	settings.currdrivers.forEach(element=>{
