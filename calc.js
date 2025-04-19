@@ -162,7 +162,7 @@ function transferPenalties(numtransfers) {
 	if (numtransfers < freetransfers) {
 		return 0;
 	}
-	return (numtransfers-freetransfers)*4;
+	return (numtransfers-freetransfers)*10;
 }
 
 function getNumTransfers(driverindexes, teamindexes) {
