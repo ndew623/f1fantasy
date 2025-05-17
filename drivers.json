@@ -1,1 +1,178 @@
-[{"id":"18", "name":"Pierre Gasly", "cost":8.8, "team":"Alpine", "teamid":"23", "active":1},{"id":"15", "name":"Jack Doohan", "cost":5.0, "team":"Alpine", "teamid":"23", "active":1},{"id":"129", "name":"Lance Stroll", "cost":9.1, "team":"Aston Martin", "teamid":"24", "active":1},{"id":"12", "name":"Fernando Alonso", "cost":6.2, "team":"Aston Martin", "teamid":"24", "active":1},{"id":"115", "name":"Charles Leclerc", "cost":24.6, "team":"Ferrari", "teamid":"25", "active":1},{"id":"110", "name":"Lewis Hamilton", "cost":23.3, "team":"Ferrari", "teamid":"25", "active":1},{"id":"118", "name":"Esteban Ocon", "cost":9.1, "team":"Haas", "teamid":"26", "active":1},{"id":"11031", "name":"Oliver Bearman", "cost":8.5, "team":"Haas", "teamid":"26", "active":1},{"id":"111", "name":"Nico Hulkenberg", "cost":6.6, "team":"Kick Sauber", "teamid":"2580", "active":1},{"id":"11051", "name":"Gabriel Bortoleto", "cost":4.5, "team":"Kick Sauber", "teamid":"2580", "active":1},{"id":"117", "name":"Lando Norris", "cost":30.1, "team":"McLaren", "teamid":"27", "active":1},{"id":"1982", "name":"Oscar Piastri", "cost":23.7, "team":"McLaren", "teamid":"27", "active":1},{"id":"124", "name":"George Russell", "cost":22.1, "team":"Mercedes", "teamid":"28", "active":1},{"id":"11161", "name":"Kimi Antonelli", "cost":19.6, "team":"Mercedes", "teamid":"28", "active":1},{"id":"130", "name":"Yuki Tsunoda", "cost":8.4, "team":"Racing Bulls", "teamid":"2636", "active":0},{"id":"11400", "name":"Liam Lawson", "cost":6.6, "team":"Racing Bulls", "teamid":"2636", "active":1},{"id":"11032", "name":"Isack Hadjar", "cost":5.7, "team":"Racing Bulls", "teamid":"2636", "active":1},{"id":"131", "name":"Max Verstappen", "cost":28.9, "team":"Red Bull Racing", "teamid":"29", "active":1},{"id":"114", "name":"Liam Lawson", "cost":16.8, "team":"Red Bull Racing", "teamid":"29", "active":0},{"id":"13000", "name":"Yuki Tsunoda", "cost":15.8, "team":"Red Bull Racing", "teamid":"29", "active":1},{"id":"11", "name":"Alexander Albon", "cost":12.6, "team":"Williams", "teamid":"210", "active":1},{"id":"125", "name":"Carlos Sainz", "cost":10.1, "team":"Williams", "teamid":"210", "active":1}]
+[
+  {
+    "id": "18",
+    "name": "Pierre Gasly",
+    "cost": 8.2,
+    "team": "Alpine",
+    "teamid": "23",
+    "active": 1
+  },
+  {
+    "id": "15",
+    "name": "Franco Colapinto",
+    "cost": 4.5,
+    "team": "Alpine",
+    "teamid": "23",
+    "active": 1
+  },
+  {
+    "id": "129",
+    "name": "Lance Stroll",
+    "cost": 9.7,
+    "team": "Aston Martin",
+    "teamid": "24",
+    "active": 1
+  },
+  {
+    "id": "12",
+    "name": "Fernando Alonso",
+    "cost": 5.6,
+    "team": "Aston Martin",
+    "teamid": "24",
+    "active": 1
+  },
+  {
+    "id": "115",
+    "name": "Charles Leclerc",
+    "cost": 24.3,
+    "team": "Ferrari",
+    "teamid": "25",
+    "active": 1
+  },
+  {
+    "id": "110",
+    "name": "Lewis Hamilton",
+    "cost": 23.6,
+    "team": "Ferrari",
+    "teamid": "25",
+    "active": 1
+  },
+  {
+    "id": "118",
+    "name": "Esteban Ocon",
+    "cost": 9.3,
+    "team": "Haas",
+    "teamid": "26",
+    "active": 1
+  },
+  {
+    "id": "11031",
+    "name": "Oliver Bearman",
+    "cost": 8.7,
+    "team": "Haas",
+    "teamid": "26",
+    "active": 1
+  },
+  {
+    "id": "111",
+    "name": "Nico Hulkenberg",
+    "cost": 6.0,
+    "team": "Kick Sauber",
+    "teamid": "2580",
+    "active": 1
+  },
+  {
+    "id": "11051",
+    "name": "Gabriel Bortoleto",
+    "cost": 4.5,
+    "team": "Kick Sauber",
+    "teamid": "2580",
+    "active": 1
+  },
+  {
+    "id": "117",
+    "name": "Lando Norris",
+    "cost": 30.4,
+    "team": "McLaren",
+    "teamid": "27",
+    "active": 1
+  },
+  {
+    "id": "1982",
+    "name": "Oscar Piastri",
+    "cost": 24,
+    "team": "McLaren",
+    "teamid": "27",
+    "active": 1
+  },
+  {
+    "id": "124",
+    "name": "George Russell",
+    "cost": 22.2,
+    "team": "Mercedes",
+    "teamid": "28",
+    "active": 1
+  },
+  {
+    "id": "11161",
+    "name": "Kimi Antonelli",
+    "cost": 19.5,
+    "team": "Mercedes",
+    "teamid": "28",
+    "active": 1
+  },
+  {
+    "id": "130",
+    "name": "Yuki Tsunoda",
+    "cost": 8.4,
+    "team": "Racing Bulls",
+    "teamid": "2636",
+    "active": 0
+  },
+  {
+    "id": "11400",
+    "name": "Liam Lawson",
+    "cost": 6.0,
+    "team": "Racing Bulls",
+    "teamid": "2636",
+    "active": 1
+  },
+  {
+    "id": "11032",
+    "name": "Isack Hadjar",
+    "cost": 5.5,
+    "team": "Racing Bulls",
+    "teamid": "2636",
+    "active": 1
+  },
+  {
+    "id": "131",
+    "name": "Max Verstappen",
+    "cost": 28.8,
+    "team": "Red Bull Racing",
+    "teamid": "29",
+    "active": 1
+  },
+  {
+    "id": "114",
+    "name": "Liam Lawson",
+    "cost": 16.8,
+    "team": "Red Bull Racing",
+    "teamid": "29",
+    "active": 0
+  },
+  {
+    "id": "13000",
+    "name": "Yuki Tsunoda",
+    "cost": 15.2,
+    "team": "Red Bull Racing",
+    "teamid": "29",
+    "active": 1
+  },
+  {
+    "id": "11",
+    "name": "Alexander Albon",
+    "cost": 12.8,
+    "team": "Williams",
+    "teamid": "210",
+    "active": 1
+  },
+  {
+    "id": "125",
+    "name": "Carlos Sainz",
+    "cost": 9.5,
+    "team": "Williams",
+    "teamid": "210",
+    "active": 1
+  }
+]
