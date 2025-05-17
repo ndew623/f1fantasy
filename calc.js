@@ -222,7 +222,7 @@ const abbrevMappings = {
 	"Alex Albon": "ALB",
 	"Carlos Sainz": "SAI",
 	"Nico Hulkenburg": "HUL",
-	"Gabriel Bortoleto": "BOR"
+	"Gabriel Bortoleto": "BOR",
 	"Franco Colapinto": "COL"
 }
 function abrevConvert(full) {
