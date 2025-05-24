@@ -4,7 +4,7 @@
 async function lastUpdateDisplay() {
 	let updateTimestampResponse = await fetch('./lastupdate.txt');
 	let updateTimestampString = await updateTimestampResponse.text();
-	document.getElementById("lastupdatedisplay").innerHTML="Last update of driver/constructor data: " + updateTimestampString + " (UTC)";
+	document.getElementById("lastupdatedisplay").innerHTML="Last update of driver/constructor data: " + updateTimestampString;
 }
 
 //------------------------------

@@ -41,6 +41,6 @@ df.write(']')
 df.close()
 
 lastupdatefile = open('lastupdate.txt', 'w')
-lastupdatefile.write(response["Meta"]["Timestamp"]["UTCTime"] + f" - {dataversion}")
+lastupdatefile.write(f"Version: {dataversion}. Time: {response["Meta"]["Timestamp"]["UTCTime"]} (UTC).")
 lastupdatefile.close()
 
