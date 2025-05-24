@@ -1,8 +1,10 @@
-#use https://fantasy.formula1.com/feeds/drivers/6_en.json
+#increment data version to get newer data. data version is number of races
 import json
 import urllib.request
 
-responseRaw = urllib.request.urlopen('https://fantasy.formula1.com/feeds/drivers/6_en.json').read()
+dataversion=8
+
+responseRaw = urllib.request.urlopen(f"https://fantasy.formula1.com/feeds/drivers/{dataversion}_en.json").read()
 response = json.loads(responseRaw)
 
 
@@ -39,6 +41,6 @@ df.write(']')
 df.close()
 
 lastupdatefile = open('lastupdate.txt', 'w')
-lastupdatefile.write(response["Meta"]["Timestamp"]["UTCTime"])
+lastupdatefile.write(response["Meta"]["Timestamp"]["UTCTime"] + f" - {dataversion}")
 lastupdatefile.close()
 
