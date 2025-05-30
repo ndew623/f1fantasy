@@ -2,7 +2,7 @@
 import json
 import urllib.request
 
-dataversion=8
+dataversion=9
 
 responseRaw = urllib.request.urlopen(f"https://fantasy.formula1.com/feeds/drivers/{dataversion}_en.json").read()
 response = json.loads(responseRaw)
@@ -41,6 +41,6 @@ df.write(']')
 df.close()
 
 lastupdatefile = open('lastupdate.txt', 'w')
-lastupdatefile.write(f"Version: {dataversion}. Time: {response["Meta"]["Timestamp"]["UTCTime"]} (UTC).")
+lastupdatefile.write(f"Version: {dataversion}. Time: "+response["Meta"]["Timestamp"]["UTCTime"]+" (UTC).")
 lastupdatefile.close()
 
