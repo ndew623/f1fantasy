@@ -58,16 +58,28 @@ function predDataInputChangeListener(e) {
 	let predDataInput = document.getElementById("preddatainput");
 	let predDataStatus = document.getElementById("preddatastatus");
 	const jsonString = predDataInput.value;
+	let invalidMessage = validateJson(jsonString);
+	if (invalidMessage.length == 0) {
+		predDataStatus.innerHTML = "JSON Parsed OK";
+	} else {
+		predDataStatus.innerHTML = invalidMessage;
+	}
+}
+function validateJson(jsonString) {
+	let failMessage = "";
 	try {
 		predData = JSON.parse(jsonString);
-		predDataStatus.innerHTML = "JSON Parsed OK";
-	} catch(error) {
-		if (jsonString.length == 0) {
-			predDataStatus.innerHTML = "Awaiting data...";
-		} else {
-			predDataStatus.innerHTML = "Could not parse input as JSON";
+		let valid = "drivers" in predData
+			&& "constructors" in predData
+			&& "pts" in predData.drivers
+			&& "pts" in predData.constructors;
+		if (!valid) {
+			failMessage = "Could not find constructor.pts and drivers.pts properties in JSON.";
 		}
+	} catch(error) {
+		failMessage = "Could not parse input as JSON";
 	}
+	return failMessage;
 }
 
 //------------------------------
