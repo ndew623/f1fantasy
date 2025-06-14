@@ -112,7 +112,11 @@ function displayCurrentPicksOptions() {
 	let currentDriverPicksElement = document.getElementById("currentDriverPicks");
 	alldriversWithInactive.forEach(driver => {
 		let label = document.createElement('label');
-		label.innerHTML = driver.name;
+		if (driver.active) {
+			label.innerHTML = driver.name;
+		} else {
+			label.innerHTML = driver.name + " ("+driver.team+" - INACTIVE)";
+		}
 		let input = document.createElement('input');
 		input.setAttribute("type", "checkbox");
 		input.setAttribute("id", driver.id+"-currdrivpick");
