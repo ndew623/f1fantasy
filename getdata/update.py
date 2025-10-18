@@ -2,7 +2,7 @@
 import json
 import urllib.request
 
-dataversion=18
+dataversion=19
 
 responseRaw = urllib.request.urlopen(f"https://fantasy.formula1.com/feeds/drivers/{dataversion}_en.json").read()
 response = json.loads(responseRaw)
